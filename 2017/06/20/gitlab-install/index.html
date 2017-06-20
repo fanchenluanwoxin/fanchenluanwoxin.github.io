@@ -4,6 +4,10 @@
   <meta charset="utf-8">
   
   
+  <meta name="description" content="其实最好的开发文档就是官方的开发文档，每次要搭建一个架构或者是学习一种新的的语言或者其它第一件事情就是找官方文档.所以gitlab https://about.gitlab.com/installation 官方文档。可以按着官方文档一步一步往下，如果出了错再去查找错误的解决方法。
+
+我装的系统是c" />
+  
 
   
   
@@ -11,14 +15,18 @@
   
   
   
-  <title>Mrt.L</title>
+  <title>linux 搭建gitlab | Mrt.L</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Mrt.L">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="其实最好的开发文档就是官方的开发文档，每次要搭建一个架构或者是学习一种新的的语言或者其它第一件事情就是找官方文档.所以gitlab https://about.gitlab.com/installation 官方文档。可以按着官方文档一步一步往下，如果出了错再去查找错误的解决方法。  我装的系统是centOS 5.6  安装配置依赖项 将在系统防火墙里面开放HTTP和SSH端口。如果你根本就没设">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux 搭建gitlab">
+<meta property="og:url" content="http://yoursite.com/2017/06/20/gitlab-install/index.html">
 <meta property="og:site_name" content="Mrt.L">
+<meta property="og:description" content="其实最好的开发文档就是官方的开发文档，每次要搭建一个架构或者是学习一种新的的语言或者其它第一件事情就是找官方文档.所以gitlab https://about.gitlab.com/installation 官方文档。可以按着官方文档一步一步往下，如果出了错再去查找错误的解决方法。  我装的系统是centOS 5.6  安装配置依赖项 将在系统防火墙里面开放HTTP和SSH端口。如果你根本就没设">
+<meta property="og:updated_time" content="2017-06-20T17:26:19.051Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Mrt.L">
+<meta name="twitter:title" content="linux 搭建gitlab">
+<meta name="twitter:description" content="其实最好的开发文档就是官方的开发文档，每次要搭建一个架构或者是学习一种新的的语言或者其它第一件事情就是找官方文档.所以gitlab https://about.gitlab.com/installation 官方文档。可以按着官方文档一步一步往下，如果出了错再去查找错误的解决方法。  我装的系统是centOS 5.6  安装配置依赖项 将在系统防火墙里面开放HTTP和SSH端口。如果你根本就没设">
   
   
     <link rel="icon" href="/css/images/favicon.ico">
@@ -59,17 +67,15 @@
     </nav>
 </header>
       <div id="main" class="wrapper">
-        <div id="primary" class="site-content"><div id="content" role="main">
-  
-    <article id="post-gitlab-install" class="post-gitlab-install post type-post status-publish format-standard hentry">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-gitlab-install" class="post-gitlab-install post type-post status-publish format-standard hentry">
     <!---->
 
       <header class="entry-header">
         
         
   
-    <h1 class="entry-title">
-      <a class="article-title" href="/2017/06/20/gitlab-install/">linux 搭建gitlab</a>
+    <h1 class="entry-title article-title">
+      linux 搭建gitlab
     </h1>
   
 
@@ -122,125 +128,20 @@ try_files $uri $uri/index.html $uri.html @gitlab;
 </article>
 
 
-
-
-
-
-  
-    <article id="post-install-nginx" class="post-install-nginx post type-post status-publish format-standard hentry">
-    <!---->
-
-      <header class="entry-header">
-        
-        
-  
-    <h1 class="entry-title">
-      <a class="article-title" href="/2017/06/20/install-nginx/">linux 安装nginx</a>
-    </h1>
-  
-
-        
-        <div class="comments-link">
-            
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2017/06/20/install-nginx/" data-id="cj44eewj800007oq734373mmp" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
-        </div><!-- .comments-link -->
-      </header><!-- .entry-header -->
-
-    <div class="entry-content">
-      
-        <p>##安装步骤</p>
-<blockquote>
-<p>由于工作需要安装了好几次nginx，感觉好麻烦。于是就自己写了一个安装脚本，准备了安装材料。</p>
-</blockquote>
-<ul>
-<li>版本nginx1.8.1</li>
-<li>安装系统cent os<br>下载地址 百度云 链接：<a href="http://pan.baidu.com/s/1hsnAcgW" target="_blank" rel="external">http://pan.baidu.com/s/1hsnAcgW</a> 密码：nvz3<br>安装说明：</li>
-<li><p>1.将下载的zip包放在 /usr底下，解压</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">cd</span> /usr</div></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ uzip nginx1.8.1.zip</div></pre></td></tr></table></figure>
-</li>
-<li><p>2.给脚本执行权限，执行脚本</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ chmod u+x nginx-install.sh</div></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ ./nginx-install.sh</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>等待安装完毕，nginx 就安装在了 /usr/local/nginx 里面。<br>出了问题，解决然后重新跑。我自己安装是没有出现问题，执行的时候出现了问题就解决，然后重新跑。</p>
-</blockquote>
-
-      
-    </div><!-- .entry-content -->
-
-    <footer class="entry-meta">
-    <a href="/2017/06/20/install-nginx/">
-    <time datetime="2017-06-19T17:10:50.201Z" class="entry-date">
-        2017-06-20
-    </time>
-</a>
+    
+<nav class="nav-single">
+    <h3 class="assistive-text">文章导航</h3>
     
     
-    </footer>
-</article>
-
-
-
-
-
-
-  
-    <article id="post-hello-world" class="post-hello-world post type-post status-publish format-standard hentry">
-    <!---->
-
-      <header class="entry-header">
-        
-        
-  
-    <h1 class="entry-title">
-      <a class="article-title" href="/2017/06/17/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <div class="comments-link">
-            
-            <a href="javascript:void(0);" data-url="http://yoursite.com/2017/06/17/hello-world/" data-id="cj41aibsp0000i0q73ptizh8n" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
-        </div><!-- .comments-link -->
-      </header><!-- .entry-header -->
-
-    <div class="entry-content">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo -port 4000</div></pre></td></tr></table></figure>
-<h1 id="hellow-word"><a href="#hellow-word" class="headerlink" title="hellow word!!"></a>hellow word!!</h1>
-      
-    </div><!-- .entry-content -->
-
-    <footer class="entry-meta">
-    <a href="/2017/06/17/hello-world/">
-    <time datetime="2017-06-17T10:00:52.260Z" class="entry-date">
-        2017-06-17
-    </time>
-</a>
+        <span class="nav-next"><a href="/2017/06/20/install-nginx/" rel="next">linux 安装nginx <span class="meta-nav">→</span></a></span>
     
-    
-    </footer>
-</article>
+</nav><!-- .nav-single -->
 
 
 
 
 
 
-  
-  
 
 </div></div>
         <div id="secondary" class="widget-area" role="complementary">
