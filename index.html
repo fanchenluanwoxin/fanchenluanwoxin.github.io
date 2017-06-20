@@ -91,12 +91,11 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">1.sudo yum install curl policycoreutils openssh-server openssh-clients</div><div class="line">2.sudo systemctl enable sshd</div><div class="line">3.sudo systemctl start sshd</div><div class="line">4.sudo yum install postfix</div><div class="line">5.sudo systemctl enable postfix</div><div class="line">6.sudo systemctl start postfix</div><div class="line">7.sudo firewall-cmd --permanent --add-service=http</div><div class="line">8.sudo systemctl reload firewalld</div></pre></td></tr></table></figure>
 </li>
 <li><p>添加GitLab仓库,并安装到服务器上(这里是管道安装，还有其它的安装方式。比如rpm安装，下载源码编译安装等)  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">1.curl -sS http://packages.gitlab.cc/install/gitlab-ce/script.rpm.sh | sudo bash</div><div class="line">2.sudo yum install gitlab-ce</div></pre></td></tr></table></figure>
-</li>
-<li><p>上面没有报错的执行完了，你会发现 gitlab 就安装在/opt/gitlab 下面，配置文件在 /etc/gitlab 下面。还有3个全局脚本,主要用到的就是 gitlab-ctl。具体的<br>参数可以 gitlab-ctl –help 查看。配置生效和启动 gitlab。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo gitlab-ctl reconfigure</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">curl -sS http://packages.gitlab.cc/install/gitlab-ce/script.rpm.sh | sudo bash  </div><div class="line">```</div></pre></td></tr></table></figure>
 </li>
 </ul>
+<p>sudo yum install gitlab-ce<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">- 上面没有报错的执行完了，你会发现 gitlab 就安装在/opt/gitlab 下面，配置文件在 /etc/gitlab 下面。还有3个全局脚本,主要用到的就是 gitlab-ctl。具体的</div><div class="line">参数可以 gitlab-ctl --help 查看。配置生效和启动 gitlab。</div></pre></td></tr></table></figure></p>
+<p>sudo gitlab-ctl reconfigure<br>```</p>
 <h3 id="注意的是每次修改配置文件都要-gitlab-ctl-reconfigure-配置才能生效。如果你自己有装nginx或者apace服务且端口用的是80，这样就会发生冲突。因为gitlab有内置nginx端口为80，只能修改端口了。"><a href="#注意的是每次修改配置文件都要-gitlab-ctl-reconfigure-配置才能生效。如果你自己有装nginx或者apace服务且端口用的是80，这样就会发生冲突。因为gitlab有内置nginx端口为80，只能修改端口了。" class="headerlink" title="注意的是每次修改配置文件都要 gitlab-ctl reconfigure 配置才能生效。如果你自己有装nginx或者apace服务且端口用的是80，这样就会发生冲突。因为gitlab有内置nginx端口为80，只能修改端口了。"></a>注意的是每次修改配置文件都要 gitlab-ctl reconfigure 配置才能生效。如果你自己有装nginx或者apace服务且端口用的是80，这样就会发生冲突。因为gitlab有内置nginx端口为80，只能修改端口了。</h3><ul>
 <li>gitlab 用已有的nginx<br>禁用内置nginx<br>vim /etc/gitlab/gitlab.rb<br>配置 nginx[‘enable’] = false<br>然后配置生效  sudo gitlab-ctl reconfigure  </li>
 <li>给现有nginx增加一个虚拟主机</li>
