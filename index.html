@@ -91,12 +91,14 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">1.sudo yum install curl policycoreutils openssh-server openssh-clients</div><div class="line">2.sudo systemctl enable sshd</div><div class="line">3.sudo systemctl start sshd</div><div class="line">4.sudo yum install postfix</div><div class="line">5.sudo systemctl enable postfix</div><div class="line">6.sudo systemctl start postfix</div><div class="line">7.sudo firewall-cmd --permanent --add-service=http</div><div class="line">8.sudo systemctl reload firewalld</div></pre></td></tr></table></figure>
 </li>
 <li><p>添加GitLab仓库,并安装到服务器上(这里是管道安装，还有其它的安装方式。比如rpm安装，下载源码编译安装等)  </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">curl -sS http://packages.gitlab.cc/install/gitlab-ce/script.rpm.sh | sudo bash  </div><div class="line">```  </div><div class="line">``` bash</div><div class="line">sudo yum install gitlab-ce</div></pre></td></tr></table></figure>
-</li>
-<li><p>上面没有报错的执行完了，你会发现 gitlab 就安装在/opt/gitlab 下面，配置文件在 /etc/gitlab 下面。还有3个全局脚本,主要用到的就是 gitlab-ctl。具体的<br>参数可以 gitlab-ctl –help 查看。配置生效和启动 gitlab。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo gitlab-ctl reconfigure</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -sS http://packages.gitlab.cc/install/gitlab-ce/script.rpm.sh | sudo bash</div></pre></td></tr></table></figure>
 </li>
 </ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo yum install gitlab-ce</div></pre></td></tr></table></figure>
+<ul>
+<li>上面没有报错的执行完了，你会发现 gitlab 就安装在/opt/gitlab 下面，配置文件在 /etc/gitlab 下面。还有3个全局脚本,主要用到的就是 gitlab-ctl。具体的<br>参数可以 gitlab-ctl –help 查看。配置生效和启动 gitlab。  </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo gitlab-ctl reconfigure</div></pre></td></tr></table></figure>
 <h3 id="注意的是每次修改配置文件都要-gitlab-ctl-reconfigure-配置才能生效。如果你自己有装nginx或者apace服务且端口用的是80，这样就会发生冲突。因为gitlab有内置nginx端口为80，只能修改端口了。"><a href="#注意的是每次修改配置文件都要-gitlab-ctl-reconfigure-配置才能生效。如果你自己有装nginx或者apace服务且端口用的是80，这样就会发生冲突。因为gitlab有内置nginx端口为80，只能修改端口了。" class="headerlink" title="注意的是每次修改配置文件都要 gitlab-ctl reconfigure 配置才能生效。如果你自己有装nginx或者apace服务且端口用的是80，这样就会发生冲突。因为gitlab有内置nginx端口为80，只能修改端口了。"></a>注意的是每次修改配置文件都要 gitlab-ctl reconfigure 配置才能生效。如果你自己有装nginx或者apace服务且端口用的是80，这样就会发生冲突。因为gitlab有内置nginx端口为80，只能修改端口了。</h3><ul>
 <li>gitlab 用已有的nginx<br>禁用内置nginx<br>vim /etc/gitlab/gitlab.rb<br>配置 nginx[‘enable’] = false<br>然后配置生效  sudo gitlab-ctl reconfigure  </li>
 <li>给现有nginx增加一个虚拟主机</li>
@@ -107,9 +109,8 @@
 <p>  location / {<br>    try_files $uri $uri/index.html $uri.html @gitlab;<br>  }</p>
 <p>  location @gitlab {<br>    proxy_read_timeout 300; # Some requests take more than 30 seconds.<br>    proxy_connect_timeout 300; # Some requests take more than 30 seconds.<br>    proxy_redirect     off;<br>    proxy_set_header   X-Forwarded-Proto $scheme;<br>    proxy_set_header   Host              $http_host;<br>    proxy_set_header   X-Real-IP         $remote_addr;<br>    proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;<br>    proxy_set_header   X-Frame-Options   SAMEORIGIN;<br>    proxy_pass <a href="http://gitlab" target="_blank" rel="external">http://gitlab</a>;<br>  }</p>
 <p>然后重启 nginx。</p>
-<p>##还有一个很重要的直接访问会报502，那是因为现有nginx没有访问 gitlab 用户的 socket 文件权限原因,于是简单粗暴的加上<br>sudo chmod -R o+x /var/opt/gitlab/gitlab-rails  </p>
-<p>###每一次 reconfigure,gitlab 文件都会都会重新生成，所以每次 reconfigure 完，都要重新授权。</p>
-
+<h2 id="还有一个很重要的直接访问会报502，那是因为现有nginx没有访问-gitlab-用户的-socket-文件权限原因-于是简单粗暴的加上"><a href="#还有一个很重要的直接访问会报502，那是因为现有nginx没有访问-gitlab-用户的-socket-文件权限原因-于是简单粗暴的加上" class="headerlink" title="还有一个很重要的直接访问会报502，那是因为现有nginx没有访问 gitlab 用户的 socket 文件权限原因,于是简单粗暴的加上"></a>还有一个很重要的直接访问会报502，那是因为现有nginx没有访问 gitlab 用户的 socket 文件权限原因,于是简单粗暴的加上</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo chmod -R o+x /var/opt/gitlab/gitlab-rails</div></pre></td></tr></table></figure>
+<h3 id="每一次-reconfigure-gitlab-文件都会都会重新生成，所以每次-reconfigure-完，都要重新授权。"><a href="#每一次-reconfigure-gitlab-文件都会都会重新生成，所以每次-reconfigure-完，都要重新授权。" class="headerlink" title="每一次 reconfigure,gitlab 文件都会都会重新生成，所以每次 reconfigure 完，都要重新授权。"></a>每一次 reconfigure,gitlab 文件都会都会重新生成，所以每次 reconfigure 完，都要重新授权。</h3>
       
     </div><!-- .entry-content -->
 
