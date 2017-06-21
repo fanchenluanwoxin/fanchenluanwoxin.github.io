@@ -61,6 +61,69 @@
       <div id="main" class="wrapper">
         <div id="primary" class="site-content"><div id="content" role="main">
   
+    <article id="post-JMM" class="post-JMM post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/2017/06/22/JMM/">java内存模型</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2017/06/22/JMM/" data-id="cj477pbe90000zkq74zvocv85" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <blockquote>
+<p>java内存模型即Java Memory Model，简称JMM。JMM定义了Java 虚拟机(JVM)在计算机内存(RAM)中的工作方式。JVM是整个计算机虚拟模型，所以JMM是隶属于JVM的。如果我们要想深入了解Java并发编程，就要先理解好Java内存模型。Java内存模型定义了多线程之间共享变量的可见性以及如何在需要的时候对共享变量进行同步。原始的Java内存模型效率并不是很理想，因此Java1.5版本对其进行了重构，现在的Java8仍沿用了Java1.5的版本。  </p>
+</blockquote>
+<h2 id="关于并发"><a href="#关于并发" class="headerlink" title="关于并发"></a>关于并发</h2><p>在并发编程涉及到两个重要的问题：1.通信 2.线程  </p>
+<ul>
+<li><p>通信 线程之间的通信机制有两种 共享内存 和 消息传递。  </p>
+<ul>
+<li>共享内存 在共享内存的并发模型里，线程之间共享程序的公共状态，线程之间通过写-读内存中的公共状态来隐式进行通信，典型的共享内存通信方式就是通过共享对象进行通信。<img src="https://ooo.0o0.ooo/2017/06/22/594a9c3f83ae4.png" alt="共享内存通信"></li>
+<li>消息传递 在消息传递的并发模型里，线程之间没有公共状态，线程之间必须通过明确的发送消息来显式进行通信，在java中典型的消息传递方式就是 wait() 和 notify()。  </li>
+</ul>
+</li>
+<li><p>同步 同步是指程序用于控制不同线程之间操作发生相对顺序的机制。在共享内存并发模型里，同步是显式进行的。程序员必须显式指定某个方法或某段代码需要在线程之间互斥执行。在消息传递的并发模型里，由于消息的发送必须在消息的接收之前，因此同步是隐式进行的。  </p>
+<ul>
+<li>volatile和synchronized  <ul>
+<li>synchronized代码块可以保证同一个时刻只能有一个线程进入代码竞争区，synchronized代码块也能保证代码块中所有变量都将会从主存中读，当线程退出代码块时，对所有变量的更新将会flush到主。  </li>
+<li>volatile 关键字可以保证变量会直接从主存读取，而对变量的更新也会直接写到主存。volatile原理是基于CPU内存屏障指令实现。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/2017/06/22/JMM/">
+    <time datetime="2017-06-21T16:07:53.723Z" class="entry-date">
+        2017-06-22
+    </time>
+</a>
+    
+    
+    </footer>
+</article>
+
+
+
+
+
+
+  
     <article id="post-gitlab-install" class="post-gitlab-install post type-post status-publish format-standard hentry">
     <!---->
 
@@ -266,6 +329,10 @@
     <h3 class="widget-title">Recents</h3>
     <div class="widget-content">
       <ul>
+        
+          <li>
+            <a href="/2017/06/22/JMM/">java内存模型</a>
+          </li>
         
           <li>
             <a href="/2017/06/20/gitlab-install/">linux 搭建gitlab</a>
