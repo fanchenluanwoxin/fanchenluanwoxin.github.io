@@ -61,6 +61,82 @@
       <div id="main" class="wrapper">
         <div id="primary" class="site-content"><div id="content" role="main">
   
+    <article id="post-thread-runnable" class="post-thread-runnable post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/2017/06/23/thread-runnable/">java多线程实现和启动</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2017/06/23/thread-runnable/" data-id="cj48neq5f0000f0q77sd2bb1q" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <blockquote>
+<p>java 实现多线程有两种方式。一种继承 java.lang.Thread 类，重写父类的 run() 方法。另一种实现 java.lang.Runnable 接口，实现接口的 run() 方法。  </p>
+</blockquote>
+<ul>
+<li><p>Thread 与 Runnable</p>
+<ol>
+<li>Thread 用的是继承，java又是单继承，会有很大的极限性。Runnable 避免点继承的局限，一个类可以继承多个接口。</li>
+<li>Runnable 同一个子类实列调用 new Thread(Runnable 实列).start() 适合于资源的共享。而 new Thread().run() 执行互补交互。</li>
+<li>源码： public class Thread extends Object implements Runnable 由此可见 Thread 类也是 Runnable 接口的子类。</li>
+</ol>
+</li>
+<li><p>start() 方法与 run() 。</p>
+<ol>
+<li>start() 方法是 Thread 类所有，但 Thread 累提供了接收 Runnable 实列的构造器，所以可以 new Thread(Runnable 实列).start()。</li>
+<li>调用 start() 方法，会通过JVM找到 run() 方法。也就是在 start() 方法里面是有调用 run() 方法的。</li>
+<li>通常做多线程使用的都是 Runnable 。  </li>
+</ol>
+</li>
+</ul>
+<h3 id="例子："><a href="#例子：" class="headerlink" title="例子："></a>例子：</h3><ol>
+<li>继承 Thread<br>package org.thread.demo;<br>class MyThread extends Thread{<br>private String name;<br>public MyThread(String name) {<br>super();<br>this.name = name;<br>}<br>public void run(){<br> for(int i=0;i&lt;10;i++){<br> System.out.println(“线程开始：”+this.name+”,i=”+i);<br> }<br>}<br>}  </li>
+</ol>
+<p>package org.thread.demo;<br>public class ThreadDemo01 {<br>  public static void main(String[] args) {<br>  MyThread mt1=new MyThread(“线程a”);<br>  MyThread mt2=new MyThread(“线程b”);<br>  mt1.run();//调用run方法启动线程<br>  mt2.run();<br>  }<br>}</p>
+<p>package org.thread.demo;<br>public class ThreadDemo01 {<br>  public static void main(String[] args) {<br>    MyThread mt1=new MyThread(“线程a”);<br>    MyThread mt2=new MyThread(“线程b”);<br>    mt1.start();//调用start方法启动线程<br>    mt2.start();<br>  }<br>}  </p>
+<ol>
+<li>实现 Runnable 接口<br>public interface Runnable{<br>public void run();<br>}</li>
+</ol>
+<p>package org.runnable.demo;<br>class MyThread implements Runnable{<br>  private String name;<br>  public MyThread(String name) {<br>  this.name = name;<br>  }<br>  public void run(){<br>    for(int i=0;i&lt;100;i++){<br>    System.out.println(“线程开始：”+this.name+”,i=”+i);<br>    }<br>  }<br>}  </p>
+<ol>
+<li>Runnable 适合资源共享 买票事件为例</li>
+</ol>
+<p>package org.demo.dff;<br>class MyThread extends Thread{<br>private int ticket=10;<br>  public void run(){<br>    for(int i=0;i<20;i++){ if(this.ticket="">0){<br>      System.out.println(“卖票：ticket”+this.ticket–);<br>      }<br>    }<br>  }<br>}</20;i++){></p>
+<p>package org.demo.dff;<br>public class ThreadTicket {<br>public static void main(String[] args) {<br>  MyThread mt1=new MyThread();<br>  MyThread mt2=new MyThread();<br>  MyThread mt3=new MyThread();<br>  mt1.start();//每个线程都各卖了10张，共卖了30张票<br>  mt2.start();//但实际只有10张票，每个线程都卖自己的票<br>  mt3.start();//没有达到资源共享<br>  }<br>}</p>
+<p>package org.demo.runnable;<br>public class RunnableTicket {<br>  public static void main(String[] args) {<br>    MyThread mt=new MyThread();<br>    new Thread(mt).start();//同一个mt，但是在Thread中就不可以，如果用同一<br>    new Thread(mt).start();//个实例化对象mt，就会出现异常<br>    new Thread(mt).start();<br>  }<br>}</p>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/2017/06/23/thread-runnable/">
+    <time datetime="2017-06-22T16:04:08.000Z" class="entry-date">
+        2017-06-23
+    </time>
+</a>
+    
+    
+    </footer>
+</article>
+
+
+
+
+
+
+  
     <article id="post-JMM" class="post-JMM post type-post status-publish format-standard hentry">
     <!---->
 
@@ -323,6 +399,10 @@
     <h3 class="widget-title">Recents</h3>
     <div class="widget-content">
       <ul>
+        
+          <li>
+            <a href="/2017/06/23/thread-runnable/">java多线程实现和启动</a>
+          </li>
         
           <li>
             <a href="/2017/06/22/JMM/">java内存模型</a>
