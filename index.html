@@ -102,14 +102,14 @@
 </li>
 </ul>
 <h3 id="例子："><a href="#例子：" class="headerlink" title="例子："></a>例子：</h3><ol>
-<li>继承 Thread<br>package org.thread.demo;<br>class MyThread extends Thread{<br>private String name;<br>public MyThread(String name) {<br>super();<br>this.name = name;<br>}<br>public void run(){<br> for(int i=0;i&lt;10;i++){<br> System.out.println(“线程开始：”+this.name+”,i=”+i);<br> }<br>}<br>}  </li>
+<li>继承 Thread<br>package org.thread.demo;<br>class MyThread extends Thread{<br>private String name;<br>public MyThread(String name) {<br>super();<br>this.name = name;<br>}<br>public void run(){<br> for(int i=0;i&lt;10;i++){<br> System.out.println(“线程开始：”+this.name+”,i=”+i);<br> }<br>}<br>}</li>
 </ol>
 <p>package org.thread.demo;<br>public class ThreadDemo01 {<br>  public static void main(String[] args) {<br>  MyThread mt1=new MyThread(“线程a”);<br>  MyThread mt2=new MyThread(“线程b”);<br>  mt1.run();//调用run方法启动线程<br>  mt2.run();<br>  }<br>}</p>
-<p>package org.thread.demo;<br>public class ThreadDemo01 {<br>  public static void main(String[] args) {<br>    MyThread mt1=new MyThread(“线程a”);<br>    MyThread mt2=new MyThread(“线程b”);<br>    mt1.start();//调用start方法启动线程<br>    mt2.start();<br>  }<br>}  </p>
+<p>package org.thread.demo;<br>public class ThreadDemo01 {<br>  public static void main(String[] args) {<br>    MyThread mt1=new MyThread(“线程a”);<br>    MyThread mt2=new MyThread(“线程b”);<br>    mt1.start();//调用start方法启动线程<br>    mt2.start();<br>  }<br>}</p>
 <ol>
 <li>实现 Runnable 接口<br>public interface Runnable{<br>public void run();<br>}</li>
 </ol>
-<p>package org.runnable.demo;<br>class MyThread implements Runnable{<br>  private String name;<br>  public MyThread(String name) {<br>  this.name = name;<br>  }<br>  public void run(){<br>    for(int i=0;i&lt;100;i++){<br>    System.out.println(“线程开始：”+this.name+”,i=”+i);<br>    }<br>  }<br>}  </p>
+<p>package org.runnable.demo;<br>class MyThread implements Runnable{<br>  private String name;<br>  public MyThread(String name) {<br>  this.name = name;<br>  }<br>  public void run(){<br>    for(int i=0;i&lt;100;i++){<br>    System.out.println(“线程开始：”+this.name+”,i=”+i);<br>    }<br>  }<br>}</p>
 <ol>
 <li>Runnable 适合资源共享 买票事件为例</li>
 </ol>
