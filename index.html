@@ -97,14 +97,15 @@
 </li>
 </ul>
 <h3 id="4-堆-Heap"><a href="#4-堆-Heap" class="headerlink" title="4.堆(Heap)"></a>4.堆(Heap)</h3><ul>
-<li>堆是被所有线程共享的区域，实在虚拟机启动时创建的。堆里面存放的都是对象的实例（new 出来的对象都存在堆中）。<br>  - 我们平常所说的垃圾回收，主要回收的就是堆区。为了提升垃圾回收的性能，又把堆分成两块区新生代（young）和年老代（old），更细一点划分新生代又可划分为Eden区和2个Survivor区（From Survivor和To Survivor）。  </li>
+<li><p>堆是被所有线程共享的区域，实在虚拟机启动时创建的。堆里面存放的都是对象的实例（new 出来的对象都存在堆中）。<br>  - 我们平常所说的垃圾回收，主要回收的就是堆区。为了提升垃圾回收的性能，又把堆分成两块区新生代（young）和年老代（old），更细一点划分新生代又可划分为Eden区和2个Survivor区（From Survivor和To Survivor）。  </p>
+</li>
+<li><p>Eden：新创建的对象存放在Eden区</p>
+</li>
+<li>From Survivor和To Survivor：保存新生代gc后还存活的对象。（使用复制算法，导致有一个Survivor空间浪费）Hotspot虚拟机新生代Eden和Survivor的大小比值为4：1，因为有两个Survivor，所以Eden:From Survivor:To Survivor比值为8：1：1。</li>
+<li>老年代：对象存活时间比较长（经过多次新生代的垃圾收集，默认是15次）的对象则进入老年的。</li>
+<li>当堆中分配的对象实例过多，且大部分对象都在使用，就会报内存溢出异常（OutOfMemoneyError）。<br>如图结构：<br><img src="https://ooo.0o0.ooo/2017/06/28/5953afbf95705.png" alt="堆">  </li>
 </ul>
-<p>如图结构：<img src="https://ooo.0o0.ooo/2017/06/28/5953afbf95705.png" alt="堆">  </p>
-<pre><code>- Eden：新创建的对象存放在Eden区
-- From Survivor和To Survivor：保存新生代gc后还存活的对象。（使用复制算法，导致有一个Survivor空间浪费）Hotspot虚拟机新生代Eden和Survivor的大小比值为4：1，因为有两个Survivor，所以Eden:From Survivor:To Survivor比值为8：1：1。
-- 老年代：对象存活时间比较长（经过多次新生代的垃圾收集，默认是15次）的对象则进入老年的。
-- 当堆中分配的对象实例过多，且大部分对象都在使用，就会报内存溢出异常（OutOfMemoneyError）。  
-</code></pre><h3 id="5-方法区"><a href="#5-方法区" class="headerlink" title="5.方法区"></a>5.方法区</h3><pre><code>- 方法区是被所有线程共享区域，用于存放已被虚拟机加载的类信息，常量，静态变量等数据。被Java虚拟机描述为堆的一个逻辑部分。习惯是也叫它永久代（permanment generation）
+<h3 id="5-方法区"><a href="#5-方法区" class="headerlink" title="5.方法区"></a>5.方法区</h3><pre><code>- 方法区是被所有线程共享区域，用于存放已被虚拟机加载的类信息，常量，静态变量等数据。被Java虚拟机描述为堆的一个逻辑部分。习惯是也叫它永久代（permanment generation）
 </code></pre><p>    - 永久代也会垃圾回收，主要针对常量池回收，类型卸载（比如反射生成大量的临时使用的Class等信息）。<br>    - 常量池用于存放编译期生成的各种字节码和符号引用，常量池具有一定的动态性，里面可以存放编译期生成的常量；运行期间的常量也可以添加进入常量池中，比如string的intern()方法。<br>    - 当方法区满时，无法在分配空间，就会抛出内存溢出的异常（OutOfMemoneyError）。</p>
 <pre><code>- java8中已经没有方法区了，取而代之的是元空间（Metaspace）  
 </code></pre><h3 id="6-直接内存"><a href="#6-直接内存" class="headerlink" title="6.直接内存"></a>6.直接内存</h3><ul>
