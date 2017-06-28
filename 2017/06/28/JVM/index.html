@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <meta name="description" content="内存划分分为6块，如下图。  
+1.程序计数器(Program Counter Register)- 程序计数器就是记录当前线程执行程序的位置，改变计数器的值来确定执行的下一条指令，比如循环、分支、方法跳转、异常处理，线程恢复都是依赖程序计数器来完成。
+    - Java虚拟机多线程是通过线程轮流" />
+  
+
+  
+  
+  
+  
+  
+  
+  <title>JVM 内存模型 | Mrt.L</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="内存划分分为6块，如下图。   1.程序计数器(Program Counter Register)- 程序计数器就是记录当前线程执行程序的位置，改变计数器的值来确定执行的下一条指令，比如循环、分支、方法跳转、异常处理，线程恢复都是依赖程序计数器来完成。     - Java虚拟机多线程是通过线程轮流切换并分配处理器执行时间的方式实现的。为了线程切换能恢复到正确的位置，每条线程都需要一个独立的程序计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JVM 内存模型">
+<meta property="og:url" content="http://yoursite.com/2017/06/28/JVM/index.html">
+<meta property="og:site_name" content="Mrt.L">
+<meta property="og:description" content="内存划分分为6块，如下图。   1.程序计数器(Program Counter Register)- 程序计数器就是记录当前线程执行程序的位置，改变计数器的值来确定执行的下一条指令，比如循环、分支、方法跳转、异常处理，线程恢复都是依赖程序计数器来完成。     - Java虚拟机多线程是通过线程轮流切换并分配处理器执行时间的方式实现的。为了线程切换能恢复到正确的位置，每条线程都需要一个独立的程序计">
+<meta property="og:image" content="https://ooo.0o0.ooo/2017/06/28/5953ade2bce06.png">
+<meta property="og:image" content="https://ooo.0o0.ooo/2017/06/28/5953afbf95705.png">
+<meta property="og:updated_time" content="2017-06-28T13:50:31.995Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JVM 内存模型">
+<meta name="twitter:description" content="内存划分分为6块，如下图。   1.程序计数器(Program Counter Register)- 程序计数器就是记录当前线程执行程序的位置，改变计数器的值来确定执行的下一条指令，比如循环、分支、方法跳转、异常处理，线程恢复都是依赖程序计数器来完成。     - Java虚拟机多线程是通过线程轮流切换并分配处理器执行时间的方式实现的。为了线程切换能恢复到正确的位置，每条线程都需要一个独立的程序计">
+<meta name="twitter:image" content="https://ooo.0o0.ooo/2017/06/28/5953ade2bce06.png">
+  
+  
+    <link rel="icon" href="/css/images/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+  
+  <!-- baidu webmaster push -->
+  <script src='//push.zhanzhang.baidu.com/push.js'></script>
+</head>
+<body class="home blog custom-background custom-font-enabled single-author">
+  <div id="page" class="hfeed site">
+      <header id="masthead" class="site-header" role="banner">
+    <hgroup>
+      <h1 class="site-title">
+        <a href="/" title="Mrt.L" rel="home">Mrt.L</a>
+      </h1>
+      
+        <h2 class="site-description">
+          <a href="/" id="subtitle">别人早在十年前就超过了你，你却想在未来三、五年超越别人~~~</a>
+        </h2>
+      
+    </hgroup>
+
+    <nav id="site-navigation" class="main-navigation" role="navigation">
+            <button class="menu-toggle">菜单</button>
+            <a class="assistive-text" href="/#content" title="跳至内容">跳至内容</a><!--TODO-->
+            <div class="menu-main-container">
+                <ul id="menu-main" class="nav-menu">
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/">主页</a></li>
+                
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page"><a href="/archives">文章</a></li>
+                
+                </ul>
+            </div>
+    </nav>
+</header>
+      <div id="main" class="wrapper">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-JVM" class="post-JVM post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title article-title">
+      JVM 内存模型
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="http://yoursite.com/2017/06/28/JVM/" data-id="cj4h270tp0000xoq70d6vb27s" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <h2 id="内存划分"><a href="#内存划分" class="headerlink" title="内存划分"></a>内存划分</h2><p>分为6块，如下图。<br><img src="https://ooo.0o0.ooo/2017/06/28/5953ade2bce06.png" alt="内存分布">  </p>
+<h3 id="1-程序计数器-Program-Counter-Register"><a href="#1-程序计数器-Program-Counter-Register" class="headerlink" title="1.程序计数器(Program Counter Register)"></a>1.程序计数器(Program Counter Register)</h3><pre><code>- 程序计数器就是记录当前线程执行程序的位置，改变计数器的值来确定执行的下一条指令，比如循环、分支、方法跳转、异常处理，线程恢复都是依赖程序计数器来完成。
+</code></pre><p>    - Java虚拟机多线程是通过线程轮流切换并分配处理器执行时间的方式实现的。为了线程切换能恢复到正确的位置，每条线程都需要一个独立的程序计数器，所以它是线程私有的。<br>    - 如果线程正在执行的是一个Java方法，这个计数器记录的是正在执行的虚拟机字节码指令的地址；如果正在执行的是Native方法，这个计数器值则为空（Undefined）。此内存区域是唯一一个在Java虚拟机规范中没有规定任何OutOfMemoryError情况的区域。  </p>
+<h3 id="2-java虚拟机栈-VM-Stack"><a href="#2-java虚拟机栈-VM-Stack" class="headerlink" title="2.java虚拟机栈(VM Stack)"></a>2.java虚拟机栈(VM Stack)</h3><pre><code>- java虚拟机栈是线程私有，生命周期与线程相同。创建线程的时候就会创建一个java虚拟机栈。
+</code></pre><p>    - 虚拟机执行java程序的时候，每个方法都会创建一个栈帧，栈帧存放在java虚拟机栈中，通过压栈出栈的方式进行方法调用。<br>    - 栈帧又分为一下几个区域：局部变量表、操作数栈、动态连接、方法出口等。<br>    - 平时我们所说的变量存在栈中，这句话说的不太严谨，应该说局部变量存放在java虚拟机栈的局部变量表中。<br>    - java的8中基本类型的局部变量的值存放在虚拟机栈的局部变量表中，如果是引用型的变量，则只存储对象的引用地址。  </p>
+<blockquote>
+<p>当用户请求web服务器，每个请求开启一个线程负责用户的响应计算（每个线程分配一个虚拟机栈空间），如果并发量大时，可能会导致内存溢出（OutOfMemoneyError），可以适当的把每个虚拟机栈的大小适当调小一点，减少内存的使用量来提高系统的并发量。<br>当栈空间调小以后，又会引发方法调用深度的的问题。因为，每个方法都会生成一个栈帧，如果方法调用深度很深就意味着，栈里面存放大量的栈帧，可能导致栈内存溢出（StackOverFlowError）。  </p>
+</blockquote>
+<h3 id="3-本地方法栈-Native-Method-Stack"><a href="#3-本地方法栈-Native-Method-Stack" class="headerlink" title="3.本地方法栈(Native Method Stack)"></a>3.本地方法栈(Native Method Stack)</h3><ul>
+<li>本地方法栈 为虚拟机使用到本地方法服务（native）。本地方法栈为线程私有，功能和虚拟机栈非常类似。线程在调用本地方法时，来存储本地方法的局部变量表，本地方法的操作数栈等等信息。<blockquote>
+<p>本地方法：是非java语言实现的方法，例如，java调用C语言，来操作某些硬件信息  </p>
+</blockquote>
+</li>
+</ul>
+<h3 id="4-堆-Heap"><a href="#4-堆-Heap" class="headerlink" title="4.堆(Heap)"></a>4.堆(Heap)</h3><ul>
+<li>堆是被所有线程共享的区域，实在虚拟机启动时创建的。堆里面存放的都是对象的实例（new 出来的对象都存在堆中）。<br>  - 我们平常所说的垃圾回收，主要回收的就是堆区。为了提升垃圾回收的性能，又把堆分成两块区新生代（young）和年老代（old），更细一点划分新生代又可划分为Eden区和2个Survivor区（From Survivor和To Survivor）。  </li>
+</ul>
+<p>如图结构：<img src="https://ooo.0o0.ooo/2017/06/28/5953afbf95705.png" alt="堆">  </p>
+<pre><code>- Eden：新创建的对象存放在Eden区
+- From Survivor和To Survivor：保存新生代gc后还存活的对象。（使用复制算法，导致有一个Survivor空间浪费）Hotspot虚拟机新生代Eden和Survivor的大小比值为4：1，因为有两个Survivor，所以Eden:From Survivor:To Survivor比值为8：1：1。
+- 老年代：对象存活时间比较长（经过多次新生代的垃圾收集，默认是15次）的对象则进入老年的。
+- 当堆中分配的对象实例过多，且大部分对象都在使用，就会报内存溢出异常（OutOfMemoneyError）。  
+</code></pre><h3 id="5-方法区"><a href="#5-方法区" class="headerlink" title="5.方法区"></a>5.方法区</h3><pre><code>- 方法区是被所有线程共享区域，用于存放已被虚拟机加载的类信息，常量，静态变量等数据。被Java虚拟机描述为堆的一个逻辑部分。习惯是也叫它永久代（permanment generation）
+</code></pre><p>    - 永久代也会垃圾回收，主要针对常量池回收，类型卸载（比如反射生成大量的临时使用的Class等信息）。<br>    - 常量池用于存放编译期生成的各种字节码和符号引用，常量池具有一定的动态性，里面可以存放编译期生成的常量；运行期间的常量也可以添加进入常量池中，比如string的intern()方法。<br>    - 当方法区满时，无法在分配空间，就会抛出内存溢出的异常（OutOfMemoneyError）。</p>
+<pre><code>- java8中已经没有方法区了，取而代之的是元空间（Metaspace）  
+</code></pre><h3 id="6-直接内存"><a href="#6-直接内存" class="headerlink" title="6.直接内存"></a>6.直接内存</h3><ul>
+<li>直接内存（Direct Memory）并不是虚拟机运行时数据区的一部分，也不是Java虚拟机规范中定义的内存区域，但是这部分内存也被频繁地使用，而且也可能导致OutOfMemoryError异常出现。<br>  - JDK1.4加的NIO中，ByteBuffer有个方法是allocateDirect(int capacity) ，这是一种基于通道（Channel）与缓冲区（Buffer）的I/O方式，它可以使用Native函数库直接分配堆外内存，然后通过一个存储在Java堆里面的DirectByteBuffer对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为避免了在Java堆和Native堆中来回复制数据。</li>
+</ul>
+<p>原文：<a href="http://www.jianshu.com/p/a60d6ef0771b" target="_blank" rel="external">http://www.jianshu.com/p/a60d6ef0771b</a></p>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/2017/06/28/JVM/">
+    <time datetime="2017-06-28T13:16:41.969Z" class="entry-date">
+        2017-06-28
+    </time>
+</a>
+    
+    
+    </footer>
+</article>
+
+
+    
+<nav class="nav-single">
+    <h3 class="assistive-text">文章导航</h3>
+    
+    
+        <span class="nav-next"><a href="/2017/06/23/thread-runnable/" rel="next">java多线程实现和启动 <span class="meta-nav">→</span></a></span>
+    
+</nav><!-- .nav-single -->
+
+
+
+
+
+
+
+</div></div>
+        <div id="secondary" class="widget-area" role="complementary">
+  
+    <aside id="search" class="widget widget_search"><form role="search" method="get" accept-charset="utf-8" id="searchform" class="searchform" action="//baidu.com/search">
+    <div>
+        <input type="text" value="" name="s" id="s" />
+        <input type="submit" id="searchsubmit" value="搜索" />
+    </div>
+</form></aside>
+
+  
+    
+  
+    
+  
+    
+  <aside class="widget">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget-content">
+      <ul>
+        
+          <li>
+            <a href="/2017/06/28/JVM/">JVM 内存模型</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/23/thread-runnable/">java多线程实现和启动</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/22/JMM/">java内存模型</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/20/gitlab-install/">linux 搭建gitlab</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/20/install-nginx/">linux 安装nginx</a>
+          </li>
+        
+      </ul>
+    </div>
+  </aside>
+
+
+  
+    
+  
+    
+  
+</div>
+      </div>
+      <footer id="colophon" role="contentinfo">
+    <p>&copy; 2017 Mrt.L
+    ♥ Powered By - Mrt.L.</p>
+    <p>个人专属| 博客- <a href="https://fanchenluanwoxin.github.io/" target="_blank">Mrt.L</a></p>
+</footer>
+
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+<script src="/js/navigation.js"></script>
+
+<div id="bg"></div>
+
+  </div>
+</body>
+</html>
