@@ -25,7 +25,7 @@
 <meta property="og:description" content="内存划分分为6块，如下图。   1.程序计数器(Program Counter Register)- 程序计数器就是记录当前线程执行程序的位置，改变计数器的值来确定执行的下一条指令，比如循环、分支、方法跳转、异常处理，线程恢复都是依赖程序计数器来完成。     - Java虚拟机多线程是通过线程轮流切换并分配处理器执行时间的方式实现的。为了线程切换能恢复到正确的位置，每条线程都需要一个独立的程序计">
 <meta property="og:image" content="https://ooo.0o0.ooo/2017/06/28/5953ade2bce06.png">
 <meta property="og:image" content="https://ooo.0o0.ooo/2017/06/28/5953afbf95705.png">
-<meta property="og:updated_time" content="2017-06-28T13:50:31.995Z">
+<meta property="og:updated_time" content="2017-06-28T13:54:52.309Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM 内存模型">
 <meta name="twitter:description" content="内存划分分为6块，如下图。   1.程序计数器(Program Counter Register)- 程序计数器就是记录当前线程执行程序的位置，改变计数器的值来确定执行的下一条指令，比如循环、分支、方法跳转、异常处理，线程恢复都是依赖程序计数器来完成。     - Java虚拟机多线程是通过线程轮流切换并分配处理器执行时间的方式实现的。为了线程切换能恢复到正确的位置，每条线程都需要一个独立的程序计">
@@ -117,7 +117,7 @@
 </code></pre><p>    - 永久代也会垃圾回收，主要针对常量池回收，类型卸载（比如反射生成大量的临时使用的Class等信息）。<br>    - 常量池用于存放编译期生成的各种字节码和符号引用，常量池具有一定的动态性，里面可以存放编译期生成的常量；运行期间的常量也可以添加进入常量池中，比如string的intern()方法。<br>    - 当方法区满时，无法在分配空间，就会抛出内存溢出的异常（OutOfMemoneyError）。</p>
 <pre><code>- java8中已经没有方法区了，取而代之的是元空间（Metaspace）  
 </code></pre><h3 id="6-直接内存"><a href="#6-直接内存" class="headerlink" title="6.直接内存"></a>6.直接内存</h3><ul>
-<li>直接内存（Direct Memory）并不是虚拟机运行时数据区的一部分，也不是Java虚拟机规范中定义的内存区域，但是这部分内存也被频繁地使用，而且也可能导致OutOfMemoryError异常出现。<br>  - JDK1.4加的NIO中，ByteBuffer有个方法是allocateDirect(int capacity) ，这是一种基于通道（Channel）与缓冲区（Buffer）的I/O方式，它可以使用Native函数库直接分配堆外内存，然后通过一个存储在Java堆里面的DirectByteBuffer对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为避免了在Java堆和Native堆中来回复制数据。</li>
+<li>直接内存（Direct Memory）并不是虚拟机运行时数据区的一部分，也不是Java虚拟机规范中定义的内存区域，但是这部分内存也被频繁地使用，而且也可能导致OutOfMemoryError异常出现。<br>  - <strong>JDK1.4加的NIO中，ByteBuffer有个方法是allocateDirect(int capacity) ，这是一种基于通道（Channel）与缓冲区（Buffer）的I/O方式，它可以使用Native函数库直接分配堆外内存，然后通过一个存储在Java堆里面的DirectByteBuffer对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为避免了在Java堆和Native堆中来回复制数据。</strong></li>
 </ul>
 <p>原文：<a href="http://www.jianshu.com/p/a60d6ef0771b" target="_blank" rel="external">http://www.jianshu.com/p/a60d6ef0771b</a></p>
 
